@@ -1,0 +1,9 @@
+{
+  "name": "part13-blog-application",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blog application backend and frontend",
+  "scripts": {
+    "start": "node Backend/index.js"
+  }
+}
