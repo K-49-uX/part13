@@ -1,26 +1,20 @@
 {
-  "name": "bloglist-expansion-step11",
+  "name": "part13-blog-backend",
   "version": "1.0.0",
-  "description": "Full Stack Open part 4 - blog list expansion step 11 (4.23 final blog auth tests)",
-
+  "private": true,
+  "description": "PostgreSQL and Express backend for the Part 13 blog application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js",
-    "test": "cross-env NODE_ENV=test node --test --test-concurrency=1"
+    "dev": "node --watch index.js"
   },
   "type": "commonjs",
-  "license": "ISC",
+  "engines": { "node": ">=20" },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.21",
-    "mongoose": "^9.6.2"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "supertest": "^7.0.0"
+    "pg": "^8.16.3"
   }
 }

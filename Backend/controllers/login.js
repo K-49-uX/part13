@@ -1,29 +1,23 @@
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const loginRouter = require('express').Router()
-const User = require('../models/user')
+const express = require('express')
+const { pool } = require('../utils/db')
+const { createToken } = require('../utils/auth')
 
-loginRouter.post('/', async (request, response) => {
-  const { username, password } = request.body
+const router = express.Router()
 
-  const user = await User.findOne({ username })
-  const passwordCorrect =
-    user === null ? false : await bcrypt.compare(password, user.passwordHash)
-
-  if (!(user && passwordCorrect)) {
-    return response.status(401).json({ error: 'invalid username or password' })
+router.post('/', async (req, res, next) => {
+  const { username, password } = req.body || {}
+  if (typeof username !== 'string' || typeof password !== 'string') {
+    return res.status(401).json({ error: 'invalid username or password' })
   }
-
-  const userForToken = {
-    username: user.username,
-    id: user._id,
-  }
-
-  const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60 * 60 })
-
-  response
-    .status(200)
-    .send({ token, id: user._id.toString(), username: user.username, name: user.name })
+  try {
+    const { rows } = await pool.query('SELECT id, username, name, password_hash FROM users WHERE username = $1', [username])
+    const user = rows[0]
+    if (!user || !(await bcrypt.compare(password, user.password_hash))) {
+      return res.status(401).json({ error: 'invalid username or password' })
+    }
+    res.json({ id: user.id, username: user.username, name: user.name, token: createToken(user) })
+  } catch (error) { next(error) }
 })
 
-module.exports = loginRouter
+module.exports = router

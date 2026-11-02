@@ -1,14 +1,16 @@
+require('dotenv').config()
+
 const app = require('./app')
-const config = require('./utils/config')
-const logger = require('./utils/logger')
+const { initializeDatabase, pool } = require('./utils/db')
 
-app.locals.databaseConnection.then((connected) => {
-  if (!connected) {
-    logger.error('API server not started because MongoDB is unavailable')
-    process.exit(1)
-  }
+const port = Number(process.env.PORT || 3003)
 
-  app.listen(config.PORT, () => {
-    logger.info(`Server running on port ${config.PORT}`)
+initializeDatabase()
+  .then(() => {
+    app.listen(port, () => console.log(`Backend listening on port ${port}`))
   })
-})
+  .catch(async (error) => {
+    console.error('Could not initialize PostgreSQL:', error.message)
+    await pool.end()
+    process.exitCode = 1
+  })

@@ -1,40 +1,22 @@
 const express = require('express')
-const mongoose = require('mongoose')
-const config = require('./utils/config')
-const logger = require('./utils/logger')
-const middleware = require('./utils/middleware')
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 
 const app = express()
 
-logger.info('connecting to MongoDB')
-
-mongoose
-  .connect(config.MONGODB_URI, { family: 4 })
-  .then(() => {
-    logger.info('connected to MongoDB')
-  })
-  .catch((error) => {
-    logger.error(`MongoDB connection failed (${error.code || error.name})`)
-    return null
-  })
-
-app.locals.databaseConnection = mongoose.connection.asPromise().then(
-  () => true,
-  () => false
-)
-
 app.use(express.json())
-app.use(middleware.requestLogger)
-app.use(middleware.tokenExtractor)
-
+app.get('/health', (req, res) => res.json({ status: 'ok' }))
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
-app.use(middleware.unknownEndpoint)
-app.use(middleware.errorHandler)
+app.use((req, res) => res.status(404).json({ error: 'unknown endpoint' }))
+app.use((error, req, res, next) => {
+  if (res.headersSent) return next(error)
+  console.error(error)
+  if (error.type === 'entity.parse.failed') return res.status(400).json({ error: 'invalid JSON' })
+  res.status(500).json({ error: 'internal server error' })
+})
 
 module.exports = app
