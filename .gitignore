@@ -1,0 +1,16 @@
+# Dependencies and local build output
+**/node_modules/
+**/dist/
+**/coverage/
+
+# Local environment and editor files
+**/.env
+**/.env.*
+!.env.example
+**/.DS_Store
+**/.idea/
+**/.vscode/
+
+# Playwright output
+**/playwright-report/
+**/test-results/
