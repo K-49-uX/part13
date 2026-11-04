@@ -39,3 +39,6 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `PUT /api/blogs/:id` updates its `likes` value.
 - `DELETE /api/blogs/:id` removes a blog owned by the authenticated user.
 - `GET /health` reports server health.
+
+
+Exercise 6 is already implemented. PUT /api/blogs/:id reads likes from the request body, updates that blog, and returns the updated blog. The route is in [controllers/blogs.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/blogs.js); the database update is in [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js).
