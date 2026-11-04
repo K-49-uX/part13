@@ -12,7 +12,8 @@ const initializeModels = async () => {
       username TEXT NOT NULL UNIQUE,
       name TEXT NOT NULL,
       password_hash TEXT NOT NULL,
-      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
     CREATE TABLE IF NOT EXISTS blogs (
       id SERIAL PRIMARY KEY,
@@ -24,6 +25,7 @@ const initializeModels = async () => {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `)
+  await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()')
 
   // Seed only an empty blog table so a fresh frontend has example content.
   const client = await pool.connect()

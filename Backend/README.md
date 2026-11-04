@@ -33,7 +33,8 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 
 - `POST /api/users` with `{ "username", "name", "password" }` creates a user.
 - `POST /api/login` returns `{ "id", "username", "name", "token" }`.
-- `GET /api/users` returns users with their blogs.
+- `GET /api/users` returns users with their blogs and timestamps; `GET /api/users/:id` returns one user.
+- `PUT /api/users/:username` updates a user's name and refreshes `updatedAt`.
 - `GET /api/blogs` and `GET /api/blogs/:id` return blogs with an owner object.
 - `POST /api/blogs` creates a blog for the authenticated user.
 - `PUT /api/blogs/:id` updates its `likes` value.
