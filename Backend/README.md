@@ -51,3 +51,6 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 ### Exercise 10: Blog ownership — complete
 
 `POST /api/login` returns a JWT. The blog creation route reads the bearer token and stores the matching user's ID as the blog owner. See `controllers/login.js` for login, `utils/auth.js` for token creation and verification, `controllers/blogs.js` for the protected route, and `models/blog.js` for saving and returning the owner.
+
+
+Exercise 11 is implemented: deletion uses both the blog ID and the authenticated user ID, so only the owner can delete it. See [controllers/blogs.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/blogs.js) and [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js).
