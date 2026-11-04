@@ -1,4 +1,4 @@
-require('dotenv').config({ quiet: true })
+require('./utils/config')
 
 const { pool } = require('./utils/db')
 

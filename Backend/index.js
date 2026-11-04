@@ -1,16 +1,16 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '.env') })
-
+const { PORT } = require('./utils/config')
+const { connectToDatabase, pool } = require('./utils/db')
+const { initializeModels } = require('./models')
 const app = require('./app')
-const { initializeDatabase, pool } = require('./utils/db')
 
-const port = Number(process.env.PORT || 3003)
+const start = async () => {
+  await connectToDatabase()
+  await initializeModels()
+  app.listen(PORT, () => console.log(`Backend listening on port ${PORT}`))
+}
 
-initializeDatabase()
-  .then(() => {
-    app.listen(port, () => console.log(`Backend listening on port ${port}`))
-  })
-  .catch(async (error) => {
-    console.error('Could not initialize PostgreSQL:', error.message)
-    await pool.end()
-    process.exitCode = 1
-  })
+start().catch(async (error) => {
+  console.error('Could not start backend:', error.message)
+  await pool.end()
+  process.exitCode = 1
+})

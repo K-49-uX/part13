@@ -11,11 +11,23 @@ The server creates the `users` and `blogs` tables on startup. If the blogs table
 ## Run
 
 ```powershell
+# From the repository root, after dependencies are installed in Backend:
+npm --prefix Backend install
+npm start
+
+# Or, while in Backend, use the development watcher:
 npm install
 npm run dev
 ```
 
 The API listens on port 3003 by default. The frontend's Vite server on port 5192 already proxies `/api` requests to it.
+
+## Structure
+
+- `index.js` loads configuration, connects to PostgreSQL, initializes models, and starts the server.
+- `utils/config.js` loads environment settings; `utils/db.js` owns the PostgreSQL pool and connection check.
+- `models/` contains blog and user database operations plus schema initialization.
+- `controllers/` contains the HTTP route handlers.
 
 ## API
 

@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken')
+const { JWT_SECRET } = require('./config')
 
 const secret = () => {
-  if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET is not set; configure it in Backend/.env')
-  return process.env.JWT_SECRET
+  if (!JWT_SECRET) throw new Error('JWT_SECRET is not set; configure it in Backend/.env')
+  return JWT_SECRET
 }
 
 const createToken = (user) => jwt.sign({ id: user.id, username: user.username }, secret(), { expiresIn: '7d' })
