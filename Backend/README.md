@@ -42,4 +42,12 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `GET /health` reports server health.
 
 
-Exercise 6 is already implemented. PUT /api/blogs/:id reads likes from the request body, updates that blog, and returns the updated blog. The route is in [controllers/blogs.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/blogs.js); the database update is in [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js).
+## Exercise notes
+
+### Exercise 6: Moar likes — complete
+
+`PUT /api/blogs/:id` reads `likes` from the request body and returns the updated blog. See `controllers/blogs.js` and `models/blog.js`.
+
+### Exercise 10: Blog ownership — complete
+
+`POST /api/login` returns a JWT. The blog creation route reads the bearer token and stores the matching user's ID as the blog owner. See `controllers/login.js` for login, `utils/auth.js` for token creation and verification, `controllers/blogs.js` for the protected route, and `models/blog.js` for saving and returning the owner.
