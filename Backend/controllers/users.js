@@ -4,6 +4,7 @@ const { User } = require('../models')
 const httpError = require('../utils/httpError')
 
 const router = express.Router()
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 router.get('/', async (req, res) => {
   res.json(await User.getAll())
@@ -19,14 +20,24 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const { username, name, password } = req.body || {}
-  if (typeof username !== 'string' || !username.trim() ||
-      typeof name !== 'string' || !name.trim() ||
-      typeof password !== 'string' || password.length < 3) {
-    throw httpError(400, 'name, username, and a password of at least 3 characters are required')
+  if (typeof username !== 'string' || !emailPattern.test(username.trim())) {
+    throw httpError(400, ['username must be a valid email address'])
   }
+  if (typeof name !== 'string' || !name.trim()) {
+    throw httpError(400, ['name must not be empty'])
+  }
+  if (typeof password !== 'string' || password.length < 3) {
+    throw httpError(400, ['password must have at least 3 characters'])
+  }
+
+  const normalizedUsername = username.trim().toLowerCase()
+  if (await User.findByUsername(normalizedUsername)) {
+    throw httpError(400, ['username must be unique'])
+  }
+
   const passwordHash = await bcrypt.hash(password, 10)
   const user = await User.create({
-    username: username.trim(),
+    username: normalizedUsername,
     name: typeof name === 'string' ? name : '',
     passwordHash,
   })

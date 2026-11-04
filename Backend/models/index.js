@@ -26,6 +26,7 @@ const initializeModels = async () => {
     );
   `)
   await pool.query('ALTER TABLE users ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()')
+  await pool.query('CREATE UNIQUE INDEX IF NOT EXISTS users_username_lower_unique ON users (LOWER(username))')
 
   // Seed only an empty blog table so a fresh frontend has example content.
   const client = await pool.connect()

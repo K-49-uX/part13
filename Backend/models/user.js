@@ -30,7 +30,7 @@ const create = async ({ username, name, passwordHash }) => {
 
 const findByUsername = async (username) => {
   const { rows } = await pool.query(
-    'SELECT id, username, name, password_hash FROM users WHERE username = $1',
+    'SELECT id, username, name, password_hash FROM users WHERE LOWER(username) = LOWER($1)',
     [username]
   )
   return rows[0] || null
