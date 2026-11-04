@@ -54,3 +54,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 
 
 Exercise 11 is implemented: deletion uses both the blog ID and the authenticated user ID, so only the owner can delete it. See [controllers/blogs.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/blogs.js) and [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js).
+
+Exercise 12 is already implemented. GET /api/blogs includes each blog’s user, and GET /api/users includes each user’s blogs. I verified both responses against PostgreSQL: all five blogs had an owner, and the user response included blogs.
+
+The relationship queries are in [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js) and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
