@@ -27,7 +27,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `index.js` loads configuration, connects to PostgreSQL, initializes models, and starts the server.
 - `utils/config.js` loads environment settings; `utils/db.js` owns the PostgreSQL pool and connection check.
 - `models/` contains blog and user database operations plus schema initialization.
-- `controllers/` contains the HTTP route handlers.
+- `controllers/` contains the HTTP route handlers; `utils/middleware.js` centralizes error responses from routes and database operations.
 
 ## API
 
