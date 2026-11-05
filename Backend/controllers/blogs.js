@@ -6,7 +6,7 @@ const httpError = require('../utils/httpError')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-  res.json(await Blog.getAll())
+  res.json(await Blog.getAll(req.query.search))
 })
 
 router.get('/:id', async (req, res) => {

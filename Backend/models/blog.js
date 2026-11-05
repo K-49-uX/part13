@@ -4,8 +4,12 @@ const selectWithUser = `SELECT b.id, b.title, b.author, b.url, b.likes,
   json_build_object('id', u.id, 'username', u.username, 'name', u.name) AS "user"
   FROM blogs b JOIN users u ON u.id = b.user_id`
 
-const getAll = async () => {
-  const { rows } = await pool.query(`${selectWithUser} ORDER BY b.likes DESC, b.id ASC`)
+const getAll = async (search) => {
+  const hasSearch = typeof search === 'string' && search.trim().length > 0
+  const query = hasSearch
+    ? `${selectWithUser} WHERE b.title ILIKE $1 ORDER BY b.likes DESC, b.id ASC`
+    : `${selectWithUser} ORDER BY b.likes DESC, b.id ASC`
+  const { rows } = await pool.query(query, hasSearch ? [`%${search.trim()}%`] : [])
   return rows
 }
 
