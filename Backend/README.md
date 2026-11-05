@@ -58,3 +58,5 @@ Exercise 11 is implemented: deletion uses both the blog ID and the authenticated
 Exercise 12 is already implemented. GET /api/blogs includes each blog’s user, and GET /api/users includes each user’s blogs. I verified both responses against PostgreSQL: all five blogs had an owner, and the user response included blogs.
 
 The relationship queries are in [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js) and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
+
+Exercise 15 is complete: GET /api/blogs orders blogs by likes in descending order. The ordering is in [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js).
