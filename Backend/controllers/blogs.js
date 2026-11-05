@@ -20,14 +20,21 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const user = getAuthenticatedUser(req)
   if (!user) throw httpError(401, 'token missing or invalid')
-  const { title, author = '', url } = req.body || {}
+  const body = req.body || {}
+  const { title, author = '', url } = body
+  const year = Object.hasOwn(body, 'year') ? body.year : new Date().getFullYear()
   if (typeof title !== 'string' || !title.trim() || typeof url !== 'string' || !url.trim()) {
     throw httpError(400, 'title and url are required')
+  }
+  const currentYear = new Date().getFullYear()
+  if (!Number.isInteger(year) || year < 1991 || year > currentYear) {
+    throw httpError(400, `year must be an integer between 1991 and ${currentYear}`)
   }
   const created = await Blog.create({
     title: title.trim(),
     author: typeof author === 'string' ? author : '',
     url: url.trim(),
+    year,
     userId: user.id,
   })
   res.status(201).json(created)

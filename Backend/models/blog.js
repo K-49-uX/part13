@@ -1,6 +1,6 @@
 const { pool } = require('../utils/db')
 
-const selectWithUser = `SELECT b.id, b.title, b.author, b.url, b.likes,
+const selectWithUser = `SELECT b.id, b.title, b.author, b.url, b.likes, b.year,
   json_build_object('id', u.id, 'username', u.username, 'name', u.name) AS "user"
   FROM blogs b JOIN users u ON u.id = b.user_id`
 
@@ -28,10 +28,10 @@ const getById = async (id) => {
   return rows[0] || null
 }
 
-const create = async ({ title, author, url, userId }) => {
+const create = async ({ title, author, url, year, userId }) => {
   const { rows } = await pool.query(
-    'INSERT INTO blogs (title, author, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id',
-    [title, author, url, userId]
+    'INSERT INTO blogs (title, author, url, year, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+    [title, author, url, year, userId]
   )
   return getById(rows[0].id)
 }

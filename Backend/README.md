@@ -40,7 +40,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `PUT /api/users/:username` updates a user's name and refreshes `updatedAt`.
 - `GET /api/blogs` and `GET /api/blogs/:id` return blogs with an owner object. Add `?search=word` to filter titles or authors case-insensitively.
 - `GET /api/authors` returns each author’s blog count and total likes, ordered by likes descending.
-- `POST /api/blogs` creates a blog for the authenticated user.
+- `POST /api/blogs` creates a blog for the authenticated user. The optional `year` must be an integer from 1991 through the current year; omitted years default to the current year.
 - `PUT /api/blogs/:id` updates its `likes` value.
 - `DELETE /api/blogs/:id` removes a blog owned by the authenticated user.
 - `GET /health` reports server health.
@@ -72,3 +72,5 @@ Exercise 15 is complete: GET /api/blogs orders blogs by likes in descending orde
 Exercise 17 is implemented: the root route responds with HTTP 200, and test mode uses `TEST_DATABASE_URL` with a protected database reset endpoint. The supplied API tests and GitHub Actions workflow are in the repository root `tests/` and `.github/workflows/` directories.
 
 Exercise 18 is complete: schema setup is managed by [migrations/001_initial_schema.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/001_initial_schema.js), and [utils/migrate.js](C:/Users/Student/Desktop/PART13/part13/Backend/utils/migrate.js) applies it on startup. Both tables have `created_at` and `updated_at` timestamps.
+
+Exercise 19 is complete: [migrations/002_blog_year.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/002_blog_year.js) adds and validates the blog year, and `controllers/blogs.js` returns a clear error for invalid years.

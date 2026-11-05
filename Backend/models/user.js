@@ -3,7 +3,7 @@ const { pool } = require('../utils/db')
 const userSelect = `SELECT u.id, u.username, u.name,
   u.created_at AS "createdAt", u.updated_at AS "updatedAt",
   COALESCE(json_agg(json_build_object(
-    'id', b.id, 'title', b.title, 'author', b.author, 'url', b.url, 'likes', b.likes
+    'id', b.id, 'title', b.title, 'author', b.author, 'url', b.url, 'likes', b.likes, 'year', b.year
   ) ORDER BY b.id) FILTER (WHERE b.id IS NOT NULL), '[]') AS blogs
   FROM users u LEFT JOIN blogs b ON b.user_id = u.id`
 
