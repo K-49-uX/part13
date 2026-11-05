@@ -7,7 +7,7 @@ const selectWithUser = `SELECT b.id, b.title, b.author, b.url, b.likes,
 const getAll = async (search) => {
   const hasSearch = typeof search === 'string' && search.trim().length > 0
   const query = hasSearch
-    ? `${selectWithUser} WHERE b.title ILIKE $1 ORDER BY b.likes DESC, b.id ASC`
+    ? `${selectWithUser} WHERE b.title ILIKE $1 OR b.author ILIKE $1 ORDER BY b.likes DESC, b.id ASC`
     : `${selectWithUser} ORDER BY b.likes DESC, b.id ASC`
   const { rows } = await pool.query(query, hasSearch ? [`%${search.trim()}%`] : [])
   return rows
