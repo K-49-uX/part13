@@ -74,3 +74,5 @@ Exercise 17 is implemented: the root route responds with HTTP 200, and test mode
 Exercise 18 is complete: schema setup is managed by [migrations/001_initial_schema.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/001_initial_schema.js), and [utils/migrate.js](C:/Users/Student/Desktop/PART13/part13/Backend/utils/migrate.js) applies it on startup. Both tables have `created_at` and `updated_at` timestamps.
 
 Exercise 19 is complete: [migrations/002_blog_year.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/002_blog_year.js) adds and validates the blog year, and `controllers/blogs.js` returns a clear error for invalid years.
+
+Exercise 20 is complete: [migrations/003_reading_list.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/003_reading_list.js) adds a user/blog join table with unread as the default state. Reading list routes and display are left for the next exercise.
