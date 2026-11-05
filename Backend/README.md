@@ -6,7 +6,7 @@ Express and PostgreSQL backend for the React frontend in `../Frontend`.
 
 Copy `.env.example` to `.env` and set `DATABASE_URL` to the PostgreSQL service URI. For a hosted PostgreSQL service that requires TLS, set `PGSSL=true`. Set `JWT_SECRET` to a long random value. Keep `.env` private.
 
-The server creates the `users` and `blogs` tables on startup. If the blogs table is empty, it inserts three sample blogs. If no user exists yet, it creates a non-login sample owner for those entries. Existing blogs are left untouched. It needs a database/user with permission to create tables. To check direct database access, use `psql "$env:DATABASE_URL"` in PowerShell after loading the URI in your environment.
+The server applies pending migrations on startup. It needs a database/user with permission to create and alter tables. To check direct database access, use `psql "$env:DATABASE_URL"` in PowerShell after loading the URI in your environment.
 
 For the API checkup, create a separate PostgreSQL database named `test_db` and set `TEST_DATABASE_URL` in `Backend/.env` to its connection URI. Never set it to the same database as `DATABASE_URL`: `/api/reset` is enabled only when `TESTING=true` and clears the selected test database.
 
@@ -28,7 +28,8 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 
 - `index.js` loads configuration, connects to PostgreSQL, initializes models, and starts the server.
 - `utils/config.js` loads environment settings; `utils/db.js` owns the PostgreSQL pool and connection check.
-- `models/` contains blog and user database operations plus schema initialization.
+- `models/` contains blog and user database operations.
+- `migrations/` contains versioned database schema changes; `utils/migrate.js` applies each migration once and records it in `schema_migrations`.
 - `controllers/` contains the HTTP route handlers; `utils/middleware.js` centralizes error responses from routes and database operations.
 
 ## API
@@ -69,3 +70,5 @@ The relationship queries are in [models/blog.js](C:/Users/Student/Desktop/PART13
 Exercise 15 is complete: GET /api/blogs orders blogs by likes in descending order. The ordering is in [models/blog.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/blog.js).
 
 Exercise 17 is implemented: the root route responds with HTTP 200, and test mode uses `TEST_DATABASE_URL` with a protected database reset endpoint. The supplied API tests and GitHub Actions workflow are in the repository root `tests/` and `.github/workflows/` directories.
+
+Exercise 18 is complete: schema setup is managed by [migrations/001_initial_schema.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/001_initial_schema.js), and [utils/migrate.js](C:/Users/Student/Desktop/PART13/part13/Backend/utils/migrate.js) applies it on startup. Both tables have `created_at` and `updated_at` timestamps.

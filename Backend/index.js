@@ -1,11 +1,11 @@
 const { PORT } = require('./utils/config')
 const { connectToDatabase, pool } = require('./utils/db')
-const { initializeModels } = require('./models')
+const { runMigrations } = require('./utils/migrate')
 const app = require('./app')
 
 const start = async () => {
   await connectToDatabase()
-  await initializeModels()
+  await runMigrations()
   app.listen(PORT, () => console.log(`Backend listening on port ${PORT}`))
 }
 

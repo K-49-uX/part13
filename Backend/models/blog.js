@@ -37,7 +37,10 @@ const create = async ({ title, author, url, userId }) => {
 }
 
 const updateLikes = async (id, likes) => {
-  const result = await pool.query('UPDATE blogs SET likes = $1 WHERE id = $2', [likes, id])
+  const result = await pool.query(
+    'UPDATE blogs SET likes = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
+    [likes, id]
+  )
   return result.rowCount ? getById(id) : null
 }
 
