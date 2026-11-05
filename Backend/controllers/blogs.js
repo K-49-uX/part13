@@ -34,7 +34,6 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-  if (!getAuthenticatedUser(req)) throw httpError(401, 'token missing or invalid')
   const id = Number(req.params.id)
   const likes = Number(req.body?.likes)
   if (!Number.isInteger(id) || id < 1 || !Number.isInteger(likes) || likes < 0) {
