@@ -36,6 +36,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 
 - `POST /api/users` with `{ "username", "name", "password" }` creates a user; usernames must be unique email addresses.
 - `POST /api/login` returns `{ "id", "username", "name", "token" }`.
+- `DELETE /api/logout` revokes the presented token's server-side session.
 - `GET /api/users` returns users with their blogs and timestamps; `GET /api/users/:id` returns one user.
 - Add `?read=true` or `?read=false` to `GET /api/users/:id` to filter the user's reading list.
 - `POST /api/readinglists` adds a blog to a user's reading list as unread; `GET /api/users/:id` includes that user's saved blogs in `readings`.
@@ -87,3 +88,5 @@ Exercise 22 is complete: each entry in `GET /api/users/:id` → `readings` inclu
 Exercise 23 is complete: `PUT /api/readinglists/:id` validates the boolean read state and updates an entry only when it belongs to the authenticated user. See [controllers/readinglists.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/readinglists.js) and [models/readingList.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/readingList.js).
 
 Exercise 24 is complete: `GET /api/users/:id` accepts `read=true` or `read=false` and filters only the `readings` array. See [controllers/users.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/users.js) and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
+
+Exercise 25 is complete: migration [004_sessions.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/004_sessions.js) adds the user `disabled` flag and sessions table. Login stores a hashed token session, authenticated routes check its validity and the user's enabled status, and `DELETE /api/logout` revokes that session. See [models/session.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/session.js), [utils/auth.js](C:/Users/Student/Desktop/PART13/part13/Backend/utils/auth.js), and [controllers/logout.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/logout.js).

@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-  const user = getAuthenticatedUser(req)
+  const user = await getAuthenticatedUser(req)
   if (!user) throw httpError(401, 'token missing or invalid')
 
   const id = Number(req.params.id)

@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const user = getAuthenticatedUser(req)
+  const user = await getAuthenticatedUser(req)
   if (!user) throw httpError(401, 'token missing or invalid')
   const body = req.body || {}
   const { title, author = '', url } = body
@@ -52,7 +52,7 @@ router.put('/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  const user = getAuthenticatedUser(req)
+  const user = await getAuthenticatedUser(req)
   if (!user) throw httpError(401, 'token missing or invalid')
   const id = Number(req.params.id)
   if (!Number.isInteger(id) || id < 1) throw httpError(400, 'invalid blog id')
