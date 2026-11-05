@@ -15,7 +15,29 @@ const getAll = async () => {
 }
 
 const getById = async (id) => {
-  const { rows } = await pool.query(`${userSelect} WHERE u.id = $1 GROUP BY u.id`, [id])
+  const { rows } = await pool.query(`
+    SELECT u.id, u.username, u.name,
+      u.created_at AS "createdAt", u.updated_at AS "updatedAt",
+      COALESCE((
+        SELECT json_agg(json_build_object(
+          'id', b.id, 'title', b.title, 'author', b.author, 'url', b.url,
+          'likes', b.likes, 'year', b.year
+        ) ORDER BY b.id)
+        FROM blogs b
+        WHERE b.user_id = u.id
+      ), '[]') AS blogs,
+      COALESCE((
+        SELECT json_agg(json_build_object(
+          'id', b.id, 'url', b.url, 'title', b.title, 'author', b.author,
+          'likes', b.likes, 'year', b.year
+        ) ORDER BY rl.id)
+        FROM reading_lists rl
+        JOIN blogs b ON b.id = rl.blog_id
+        WHERE rl.user_id = u.id
+      ), '[]') AS readings
+    FROM users u
+    WHERE u.id = $1
+  `, [id])
   return rows[0] || null
 }
 

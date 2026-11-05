@@ -37,6 +37,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `POST /api/users` with `{ "username", "name", "password" }` creates a user; usernames must be unique email addresses.
 - `POST /api/login` returns `{ "id", "username", "name", "token" }`.
 - `GET /api/users` returns users with their blogs and timestamps; `GET /api/users/:id` returns one user.
+- `POST /api/readinglists` adds a blog to a user's reading list as unread; `GET /api/users/:id` includes that user's saved blogs in `readings`.
 - `PUT /api/users/:username` updates a user's name and refreshes `updatedAt`.
 - `GET /api/blogs` and `GET /api/blogs/:id` return blogs with an owner object. Add `?search=word` to filter titles or authors case-insensitively.
 - `GET /api/authors` returns each author’s blog count and total likes, ordered by likes descending.
@@ -76,3 +77,5 @@ Exercise 18 is complete: schema setup is managed by [migrations/001_initial_sche
 Exercise 19 is complete: [migrations/002_blog_year.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/002_blog_year.js) adds and validates the blog year, and `controllers/blogs.js` returns a clear error for invalid years.
 
 Exercise 20 is complete: [migrations/003_reading_list.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/003_reading_list.js) adds a user/blog join table with unread as the default state. Reading list routes and display are left for the next exercise.
+
+Exercise 21 is complete: `POST /api/readinglists` validates the supplied user and blog IDs, creates an unread entry, and `GET /api/users/:id` includes saved blog details in `readings`. See [controllers/readinglists.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/readinglists.js), [models/readingList.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/readingList.js), and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
