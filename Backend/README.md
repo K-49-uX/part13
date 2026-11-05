@@ -49,7 +49,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `DELETE /api/blogs/:id` removes a blog owned by the authenticated user.
 - `GET /health` reports server health.
 - `GET /` returns HTTP 200.
-- `POST /api/reset` clears blogs and users only when running in test mode.
+- `POST /api/reset` clears users, blogs, reading lists, and sessions only when running in test mode.
 
 From the repository root, install dependencies with `npm ci` and `npm ci --prefix Backend`. Run `npm run start:test` in one terminal and `npm test` in another. The test server listens on port 3001 and selects `TEST_DATABASE_URL`.
 
@@ -90,3 +90,5 @@ Exercise 23 is complete: `PUT /api/readinglists/:id` validates the boolean read 
 Exercise 24 is complete: `GET /api/users/:id` accepts `read=true` or `read=false` and filters only the `readings` array. See [controllers/users.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/users.js) and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
 
 Exercise 25 is complete: migration [004_sessions.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/004_sessions.js) adds the user `disabled` flag and sessions table. Login stores a hashed token session, authenticated routes check its validity and the user's enabled status, and `DELETE /api/logout` revokes that session. See [models/session.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/session.js), [utils/auth.js](C:/Users/Student/Desktop/PART13/part13/Backend/utils/auth.js), and [controllers/logout.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/logout.js).
+
+Exercise 26 is complete: test mode's `POST /api/reset` clears users, blogs, reading lists, and sessions. `npm test` runs all course API test files serially; all 34 tests passed locally. GitHub Actions is configured in the root `.github/workflows/test.yml`.

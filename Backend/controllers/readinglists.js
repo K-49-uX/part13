@@ -30,6 +30,10 @@ router.put('/:id', async (req, res) => {
   if (!Number.isInteger(id) || id < 1) throw httpError(400, 'invalid reading list id')
   if (typeof req.body?.read !== 'boolean') throw httpError(400, 'read must be a boolean')
 
+  const entry = await ReadingList.getById(id)
+  if (!entry) throw httpError(404, 'reading list entry not found')
+  if (entry.userId !== user.id) throw httpError(401, 'not authorized to update this reading list entry')
+
   const updated = await ReadingList.updateReadByOwner({ id, userId: user.id, read: req.body.read })
   if (!updated) throw httpError(404, 'reading list entry not found')
   res.json(updated)

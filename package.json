@@ -5,7 +5,7 @@
   "description": "Blog application backend and frontend",
   "scripts": {
     "start": "node Backend/index.js",
-    "start:test": "node scripts/start-test.js",
+    "start:test": "node scripts/startTestingServer.js",
     "test": "node scripts/run-tests.js"
   },
   "dependencies": {

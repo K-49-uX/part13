@@ -16,7 +16,7 @@ app.get('/', (req, res) => res.status(200).send('Blog API is running'))
 app.get('/health', (req, res) => res.json({ status: 'ok' }))
 app.post('/api/reset', async (req, res) => {
   if (!TESTING) return res.status(404).json({ error: 'unknown endpoint' })
-  await pool.query('TRUNCATE TABLE blogs, users RESTART IDENTITY CASCADE')
+  await pool.query('TRUNCATE TABLE sessions, reading_lists, blogs, users RESTART IDENTITY CASCADE')
   res.status(204).end()
 })
 app.use('/api/blogs', blogsRouter)

@@ -10,6 +10,14 @@ const create = async ({ userId, blogId }) => {
   return rows[0]
 }
 
+const getById = async (id) => {
+  const { rows } = await pool.query(
+    'SELECT id, user_id AS "userId" FROM reading_lists WHERE id = $1',
+    [id]
+  )
+  return rows[0] || null
+}
+
 const updateReadByOwner = async ({ id, userId, read }) => {
   const { rows } = await pool.query(`
     UPDATE reading_lists
@@ -21,4 +29,4 @@ const updateReadByOwner = async ({ id, userId, read }) => {
   return rows[0] || null
 }
 
-module.exports = { create, updateReadByOwner }
+module.exports = { create, getById, updateReadByOwner }

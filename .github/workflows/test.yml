@@ -48,4 +48,4 @@ jobs:
         run: cat app.log
       - name: Stop application
         if: always()
-        run: pkill -f "node scripts/start-test.js" || true
+        run: pkill -f "node scripts/startTestingServer.js" || true
