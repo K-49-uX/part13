@@ -37,6 +37,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `POST /api/users` with `{ "username", "name", "password" }` creates a user; usernames must be unique email addresses.
 - `POST /api/login` returns `{ "id", "username", "name", "token" }`.
 - `GET /api/users` returns users with their blogs and timestamps; `GET /api/users/:id` returns one user.
+- Add `?read=true` or `?read=false` to `GET /api/users/:id` to filter the user's reading list.
 - `POST /api/readinglists` adds a blog to a user's reading list as unread; `GET /api/users/:id` includes that user's saved blogs in `readings`.
 - `PUT /api/readinglists/:id` changes the `read` state for an entry owned by the authenticated user.
 - `PUT /api/users/:username` updates a user's name and refreshes `updatedAt`.
@@ -84,3 +85,5 @@ Exercise 21 is complete: `POST /api/readinglists` validates the supplied user an
 Exercise 22 is complete: each entry in `GET /api/users/:id` → `readings` includes `readingList: { read, id }` from its join table row. The response is assembled in [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
 
 Exercise 23 is complete: `PUT /api/readinglists/:id` validates the boolean read state and updates an entry only when it belongs to the authenticated user. See [controllers/readinglists.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/readinglists.js) and [models/readingList.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/readingList.js).
+
+Exercise 24 is complete: `GET /api/users/:id` accepts `read=true` or `read=false` and filters only the `readings` array. See [controllers/users.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/users.js) and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).

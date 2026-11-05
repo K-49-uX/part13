@@ -13,7 +13,14 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const id = Number(req.params.id)
   if (!Number.isInteger(id) || id < 1) throw httpError(400, 'invalid user id')
-  const user = await User.getById(id)
+  let read = null
+  if (req.query.read !== undefined) {
+    if (req.query.read !== 'true' && req.query.read !== 'false') {
+      throw httpError(400, 'read must be true or false')
+    }
+    read = req.query.read === 'true'
+  }
+  const user = await User.getById(id, read)
   if (!user) throw httpError(404, 'user not found')
   res.json(user)
 })

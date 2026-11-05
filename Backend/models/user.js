@@ -14,7 +14,7 @@ const getAll = async () => {
   return rows
 }
 
-const getById = async (id) => {
+const getById = async (id, read = null) => {
   const { rows } = await pool.query(`
     SELECT u.id, u.username, u.name,
       u.created_at AS "createdAt", u.updated_at AS "updatedAt",
@@ -35,10 +35,11 @@ const getById = async (id) => {
         FROM reading_lists rl
         JOIN blogs b ON b.id = rl.blog_id
         WHERE rl.user_id = u.id
+          AND ($2::boolean IS NULL OR rl.read = $2)
       ), '[]') AS readings
     FROM users u
     WHERE u.id = $1
-  `, [id])
+  `, [id, read])
   return rows[0] || null
 }
 
