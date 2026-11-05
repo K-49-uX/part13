@@ -29,7 +29,8 @@ const getById = async (id) => {
       COALESCE((
         SELECT json_agg(json_build_object(
           'id', b.id, 'url', b.url, 'title', b.title, 'author', b.author,
-          'likes', b.likes, 'year', b.year
+          'likes', b.likes, 'year', b.year,
+          'readingList', json_build_object('read', rl.read, 'id', rl.id)
         ) ORDER BY rl.id)
         FROM reading_lists rl
         JOIN blogs b ON b.id = rl.blog_id

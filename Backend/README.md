@@ -79,3 +79,5 @@ Exercise 19 is complete: [migrations/002_blog_year.js](C:/Users/Student/Desktop/
 Exercise 20 is complete: [migrations/003_reading_list.js](C:/Users/Student/Desktop/PART13/part13/Backend/migrations/003_reading_list.js) adds a user/blog join table with unread as the default state. Reading list routes and display are left for the next exercise.
 
 Exercise 21 is complete: `POST /api/readinglists` validates the supplied user and blog IDs, creates an unread entry, and `GET /api/users/:id` includes saved blog details in `readings`. See [controllers/readinglists.js](C:/Users/Student/Desktop/PART13/part13/Backend/controllers/readinglists.js), [models/readingList.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/readingList.js), and [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
+
+Exercise 22 is complete: each entry in `GET /api/users/:id` → `readings` includes `readingList: { read, id }` from its join table row. The response is assembled in [models/user.js](C:/Users/Student/Desktop/PART13/part13/Backend/models/user.js).
