@@ -13,6 +13,16 @@ const getAll = async (search) => {
   return rows
 }
 
+const getAuthors = async () => {
+  const { rows } = await pool.query(`
+    SELECT author, COUNT(*)::text AS blogs, COALESCE(SUM(likes), 0)::text AS likes
+    FROM blogs
+    GROUP BY author
+    ORDER BY SUM(likes) DESC, author ASC
+  `)
+  return rows
+}
+
 const getById = async (id) => {
   const { rows } = await pool.query(`${selectWithUser} WHERE b.id = $1`, [id])
   return rows[0] || null
@@ -36,4 +46,4 @@ const deleteOwned = async (id, userId) => {
   return result.rowCount > 0
 }
 
-module.exports = { getAll, getById, create, updateLikes, deleteOwned }
+module.exports = { getAll, getAuthors, getById, create, updateLikes, deleteOwned }

@@ -36,6 +36,7 @@ The API listens on port 3003 by default. The frontend's Vite server on port 5192
 - `GET /api/users` returns users with their blogs and timestamps; `GET /api/users/:id` returns one user.
 - `PUT /api/users/:username` updates a user's name and refreshes `updatedAt`.
 - `GET /api/blogs` and `GET /api/blogs/:id` return blogs with an owner object. Add `?search=word` to filter titles or authors case-insensitively.
+- `GET /api/authors` returns each author’s blog count and total likes, ordered by likes descending.
 - `POST /api/blogs` creates a blog for the authenticated user.
 - `PUT /api/blogs/:id` updates its `likes` value.
 - `DELETE /api/blogs/:id` removes a blog owned by the authenticated user.
