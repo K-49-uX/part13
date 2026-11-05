@@ -1,6 +1,7 @@
 const express = require('express')
 const { Blog, User } = require('../models')
 const ReadingList = require('../models/readingList')
+const { getAuthenticatedUser } = require('../utils/auth')
 const httpError = require('../utils/httpError')
 
 const router = express.Router()
@@ -19,6 +20,19 @@ router.post('/', async (req, res) => {
 
   const reading = await ReadingList.create({ blogId, userId })
   res.status(201).json(reading)
+})
+
+router.put('/:id', async (req, res) => {
+  const user = getAuthenticatedUser(req)
+  if (!user) throw httpError(401, 'token missing or invalid')
+
+  const id = Number(req.params.id)
+  if (!Number.isInteger(id) || id < 1) throw httpError(400, 'invalid reading list id')
+  if (typeof req.body?.read !== 'boolean') throw httpError(400, 'read must be a boolean')
+
+  const updated = await ReadingList.updateReadByOwner({ id, userId: user.id, read: req.body.read })
+  if (!updated) throw httpError(404, 'reading list entry not found')
+  res.json(updated)
 })
 
 module.exports = router

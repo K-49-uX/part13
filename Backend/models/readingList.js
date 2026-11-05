@@ -10,4 +10,15 @@ const create = async ({ userId, blogId }) => {
   return rows[0]
 }
 
-module.exports = { create }
+const updateReadByOwner = async ({ id, userId, read }) => {
+  const { rows } = await pool.query(`
+    UPDATE reading_lists
+    SET read = $1, updated_at = CURRENT_TIMESTAMP
+    WHERE id = $2 AND user_id = $3
+    RETURNING id, user_id AS "userId", blog_id AS "blogId", read,
+      created_at AS "createdAt", updated_at AS "updatedAt"
+  `, [read, id, userId])
+  return rows[0] || null
+}
+
+module.exports = { create, updateReadByOwner }
